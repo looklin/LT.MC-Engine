@@ -1,0 +1,378 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MC.Engine.Light</name>
+    </assembly>
+    <members>
+        <member name="T:MC.Engine.Light.EngineState">
+            <summary>
+            引擎运行状态
+            状态转换遵循严格的PLC模式：Idle → Running → Paused → Running/Idle
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineState.Idle">
+            <summary>空闲状态：引擎已初始化，等待启动命令</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineState.Running">
+            <summary>运行状态：任务正在执行中</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineState.Paused">
+            <summary>暂停状态：任务已挂起，保持当前步骤等待继续</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineState.Stopping">
+            <summary>停止中：正在执行减速停止流程</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineState.Error">
+            <summary>错误状态：发生异常，需要手动复位才能重新启动</summary>
+        </member>
+        <member name="T:MC.Engine.Light.EngineCommand">
+            <summary>
+            引擎命令
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.Start">
+            <summary>启动</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.Pause">
+            <summary>暂停</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.Resume">
+            <summary>继续</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.Stop">
+            <summary>停止</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.EmergencyStop">
+            <summary>急停</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.StopComplete">
+            <summary>停止完成</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.Reset">
+            <summary>复位</summary>
+        </member>
+        <member name="T:MC.Engine.Light.StopMode">
+            <summary>
+            停止模式
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.StopMode.Smooth">
+            <summary>平滑停止：减速到零</summary>
+        </member>
+        <member name="F:MC.Engine.Light.StopMode.Quick">
+            <summary>快速停止：按最大减速度停止</summary>
+        </member>
+        <member name="F:MC.Engine.Light.StopMode.Emergency">
+            <summary>急停：立即切断动力</summary>
+        </member>
+        <member name="T:MC.Engine.Light.ErrorSeverity">
+            <summary>
+            错误严重级别
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.ErrorSeverity.Warning">
+            <summary>警告，可继续运行</summary>
+        </member>
+        <member name="F:MC.Engine.Light.ErrorSeverity.Recoverable">
+            <summary>可恢复错误</summary>
+        </member>
+        <member name="F:MC.Engine.Light.ErrorSeverity.Fatal">
+            <summary>致命错误，需要停止</summary>
+        </member>
+        <member name="T:MC.Engine.Light.StateChangedEventArgs">
+            <summary>
+            状态变更事件参数
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.StateChangedEventArgs.PreviousState">
+            <summary>之前的状态</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StateChangedEventArgs.NewState">
+            <summary>新的状态</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StateChangedEventArgs.Timestamp">
+            <summary>时间戳</summary>
+        </member>
+        <member name="T:MC.Engine.Light.ErrorEventArgs">
+            <summary>
+            错误事件参数
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.ErrorEventArgs.ErrorMessage">
+            <summary>错误消息</summary>
+        </member>
+        <member name="P:MC.Engine.Light.ErrorEventArgs.Severity">
+            <summary>错误严重级别</summary>
+        </member>
+        <member name="P:MC.Engine.Light.ErrorEventArgs.Timestamp">
+            <summary>时间戳</summary>
+        </member>
+        <member name="T:MC.Engine.Light.StepChangedEventArgs">
+            <summary>
+            步骤变更事件参数
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.StepChangedEventArgs.TaskName">
+            <summary>任务名称</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StepChangedEventArgs.PreviousStep">
+            <summary>之前的步骤</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StepChangedEventArgs.CurrentStep">
+            <summary>当前步骤</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StepChangedEventArgs.Timestamp">
+            <summary>时间戳</summary>
+        </member>
+        <member name="T:MC.Engine.Light.MotionEngineException">
+            <summary>
+            运动引擎异常
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.MotionEngineException.StateAtError">
+            <summary>错误发生时的引擎状态</summary>
+        </member>
+        <member name="P:MC.Engine.Light.MotionEngineException.Severity">
+            <summary>错误严重级别</summary>
+        </member>
+        <member name="T:MC.Engine.Light.InvalidStateException">
+            <summary>
+            无效状态异常
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Light.ExecutionContext">
+            <summary>
+            执行上下文：负责暂停/继续/停止的线程协调
+            每个任务循环中应在关键步骤前调用 WaitIfPaused()
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.ExecutionContext._runGate">
+            <summary>全局运行闸门：Set()=打开(运行)，Reset()=关闭(暂停)</summary>
+        </member>
+        <member name="F:MC.Engine.Light.ExecutionContext._isStopping">
+            <summary>停止标志：标记是否正在执行停止流程</summary>
+        </member>
+        <member name="F:MC.Engine.Light.ExecutionContext._cts">
+            <summary>取消令牌源：用于通知任务取消</summary>
+        </member>
+        <member name="F:MC.Engine.Light.ExecutionContext._awaitCondition">
+            <summary>任务间通信标志：用于 TaskA 等待 TaskB 完成某操作</summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.#ctor">
+            <summary>
+            初始化执行上下文
+            闸门初始状态为打开，允许任务立即开始执行
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.ExecutionContext.CancellationToken">
+            <summary>获取取消令牌，用于传递给底层异步操作</summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.WaitIfPaused">
+            <summary>
+            暂停检查点：在每个运动步骤执行前调用此方法
+            
+            行为说明：
+            - 如果正在停止：立即抛出 OperationCanceledException，中断任务循环
+            - 如果已暂停：阻塞在此处，直到继续信号到达
+            - 正常运行：立即返回，继续执行后续步骤
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.WaitUntilAsync(System.Func{System.Boolean},System.Int32)">
+            <summary>
+            等待条件满足（用于任务间同步）
+            典型场景：TaskA 在 step1 等待 TaskB 将准备条件设为 true
+            
+            实现逻辑：
+            1. 循环检查条件函数返回值
+            2. 每次检查前调用 WaitIfPaused，确保暂停时也能正确阻塞
+            3. 支持超时机制，防止无限等待
+            </summary>
+            <param name="condition">条件函数，返回 true 表示条件满足</param>
+            <param name="timeoutMs">超时时间（毫秒），-1 或 0 表示永不超时</param>
+            <exception cref="T:System.TimeoutException">等待超时时抛出</exception>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.RequestPause">
+            <summary>
+            请求暂停：关闭闸门
+            调用后，所有任务将在下次 WaitIfPaused() 处阻塞
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.RequestResume">
+            <summary>
+            请求继续：打开闸门
+            调用后，所有阻塞在 WaitIfPaused() 的任务将继续执行
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.RequestStop">
+            <summary>
+            请求停止：释放闸门 + 发送取消信号
+            
+            重要：必须先 Set() 再 Cancel()，原因：
+            1. Set() 释放闸门，让暂停的任务可以继续走到 WaitIfPaused()
+            2. Cancel() 使 WaitIfPaused() 抛出异常，退出任务循环
+            如果顺序颠倒，暂停的任务会永远阻塞在 WaitIfPaused()
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.SetCondition(System.Boolean)">
+            <summary>设置条件标志（用于任务间通信）</summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.GetCondition">
+            <summary>获取条件标志</summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.Dispose">
+            <summary>释放所有托管资源</summary>
+        </member>
+        <member name="T:MC.Engine.Light.MotionEngine">
+            <summary>
+            运动控制引擎核心类
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.MotionEngine._stateMachine">
+            <summary>状态机实例：管理引擎状态转换</summary>
+        </member>
+        <member name="F:MC.Engine.Light.MotionEngine._context">
+            <summary>当前执行上下文：负责暂停/继续/停止的线程协调</summary>
+        </member>
+        <member name="F:MC.Engine.Light.MotionEngine._lock">
+            <summary>线程同步锁：防止并发调用公共 API</summary>
+        </member>
+        <member name="P:MC.Engine.Light.MotionEngine.State">
+            <summary>
+            当前引擎状态（只读）
+            </summary>
+        </member>
+        <member name="E:MC.Engine.Light.MotionEngine.StateChanged">
+            <summary>状态变更事件</summary>
+        </member>
+        <member name="E:MC.Engine.Light.MotionEngine.ErrorOccurred">
+            <summary>错误发生事件</summary>
+        </member>
+        <member name="E:MC.Engine.Light.MotionEngine.StepChanged">
+            <summary>步骤变更事件（由任务代码触发）</summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.#ctor">
+            <summary>
+            初始化引擎
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.StartAsync(System.Func{MC.Engine.Light.ExecutionContext,System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <summary>
+            启动引擎
+            
+            执行流程：
+            1. 验证当前状态是否为 Idle 或 Error（其他状态不允许启动）
+            2. 状态转换：Idle → Running
+            3. 创建执行上下文（打开闸门）
+            4. 执行用户提供的任务函数
+            5. 任务完成后状态转换：Running → Idle
+            
+            异常处理：
+            - OperationCanceledException：正常停止，不视为错误
+            - 其他异常：进入 Error 状态，需要手动 Reset
+            </summary>
+            <param name="taskRunner">
+            任务执行函数。接收 ExecutionContext 参数，用于检查暂停/停止信号
+            </param>
+            <param name="cancellationToken">外部取消令牌（可选）</param>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.Pause">
+            <summary>
+            暂停引擎
+            
+            工作原理：关闭执行上下文的闸门，所有任务将在下次 WaitIfPaused() 处阻塞
+            调用时机：必须在 Running 状态下调用
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.Resume">
+            <summary>
+            继续引擎
+            
+            工作原理：打开执行上下文的闸门，释放所有阻塞的任务线程
+            调用时机：必须在 Paused 状态下调用
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.Stop(MC.Engine.Light.StopMode)">
+            <summary>
+            停止引擎
+            
+            工作原理：
+            1. 先打开闸门（释放暂停的任务）
+            2. 发送取消信号（使 WaitIfPaused 抛出异常）
+            3. 等待任务循环退出
+            
+            调用时机：Running 或 Paused 状态下均可
+            </summary>
+            <param name="mode">停止模式（预留扩展，当前未使用）</param>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.Reset">
+            <summary>
+            复位引擎（从错误状态恢复）
+            
+            工作流程：将状态从 Error 转换回 Idle
+            调用时机：必须在 Error 状态下调用
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.ReportStepChanged(System.String,System.String,System.String)">
+            <summary>
+            触发步骤变更事件（公开方法，供外部调用）
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.OnError(System.String,MC.Engine.Light.ErrorSeverity)">
+            <summary>
+            触发错误事件
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.OnStepChanged(System.String,System.String,System.String)">
+            <summary>
+            触发步骤变更事件（内部使用）
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Light.StateMachine">
+            <summary>
+            状态机：管理引擎生命周期中的状态转换
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.StateMachine._currentState">
+            <summary>当前状态，初始为 Idle</summary>
+        </member>
+        <member name="F:MC.Engine.Light.StateMachine._lock">
+            <summary>状态转换锁：保证并发安全</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StateMachine.CurrentState">
+            <summary>
+            当前状态（只读）
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.StateMachine.TransitionRules">
+            <summary>
+            状态转换规则矩阵
+            格式：(当前状态, 输入命令) => 下一状态
+            
+            转换流程：
+            Idle --Start--> Running --Pause--> Paused --Resume--> Running
+                                   \--Stop--> Stopping --StopComplete--> Idle
+            Error --Reset--> Idle
+            </summary>
+        </member>
+        <member name="E:MC.Engine.Light.StateMachine.StateChanged">
+            <summary>状态变更事件：外部可订阅以响应状态变化</summary>
+        </member>
+        <member name="M:MC.Engine.Light.StateMachine.TryTransition(MC.Engine.Light.EngineCommand)">
+            <summary>
+            尝试执行状态转换
+            </summary>
+            <param name="command">要执行的命令</param>
+            <returns>是否转换成功</returns>
+        </member>
+        <member name="M:MC.Engine.Light.StateMachine.ForceState(MC.Engine.Light.EngineState)">
+            <summary>
+            强制设置状态（用于初始化或错误恢复）
+            </summary>
+        </member>
+    </members>
+</doc>

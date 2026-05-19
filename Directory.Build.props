@@ -1,0 +1,52 @@
+<Project>
+  <!-- 全局共享属性,应用于所有项目 -->
+  <PropertyGroup>
+    <!-- 语言版本 -->
+    <LangVersion>latest</LangVersion>
+
+    <!-- 启用源链接和符号包 -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- 生成 XML 文档 -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- 启用 .NET 分析器 -->
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <!-- 包信息 -->
+    <Authors>nan.lin Contributors</Authors>
+    <Company>Lenton</Company>
+    <Copyright>Copyright © Lenton Contributors</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/looklin/LT.MC-Engine</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/looklin/LT.MC-Engine</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>motion-control;plc;automation;state-machine;middleware;di;hal</PackageTags>
+
+    <!-- 包图标 -->
+    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
+
+  <!-- 包输出路径 - 放在 PropertyGroup 外面确保生效 -->
+  <PropertyGroup>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)nupkgs\</PackageOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)docs\icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- 正式发布时启用 -->
+  <!--
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="all" />
+  </ItemGroup>
+  -->
+</Project>

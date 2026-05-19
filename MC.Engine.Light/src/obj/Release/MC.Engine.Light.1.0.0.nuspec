@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MC.Engine.Light</id>
+    <version>1.0.0</version>
+    <authors>MC Engine Contributors</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/example/mc-engine-light</projectUrl>
+    <description>轻量级运动控制流程引擎 - 类PLC启动/暂停/继续/停止功能，基于ManualResetEvent闸门机制实现</description>
+    <copyright>Copyright (c) 2026</copyright>
+    <tags>motion-control plc automation state-machine lightweight</tags>
+    <repository type="git" url="https://github.com/example/mc-engine-light" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="E:\工具\MC-Engine\MC.Engine.Light\src\bin\Release\netstandard2.0\MC.Engine.Light.dll" target="lib\netstandard2.0\MC.Engine.Light.dll" />
+    <file src="E:\工具\MC-Engine\MC.Engine.Light\src\bin\Release\netstandard2.0\MC.Engine.Light.xml" target="lib\netstandard2.0\MC.Engine.Light.xml" />
+    <file src="E:\工具\MC-Engine\MC.Engine.Light\README.md" target="\README.md" />
+  </files>
+</package>

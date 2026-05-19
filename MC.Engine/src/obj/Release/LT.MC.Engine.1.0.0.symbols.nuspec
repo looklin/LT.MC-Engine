@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>LT.MC.Engine</id>
+    <version>1.0.0</version>
+    <title>LT.MC.Engine - Motion Control Engine</title>
+    <authors>nan.lin Contributors</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>icon.png</icon>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/looklin/LT.MC-Engine</projectUrl>
+    <description>完整功能运动控制流程引擎 - 类PLC启动/暂停/继续/停止功能，支持中间件管道、依赖注入和硬件抽象层</description>
+    <releaseNotes>Initial release with motion control engine, middleware pipeline, DI support, and HAL.</releaseNotes>
+    <copyright>Copyright © Lenton Contributors</copyright>
+    <tags>motion-control plc automation state-machine middleware di hal</tags>
+    <repository type="git" url="https://github.com/looklin/LT.MC-Engine" />
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="8.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="8.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="E:\工具\MC-Engine\MC.Engine\src\bin\Release\net8.0\MC.Engine.pdb" target="lib\net8.0\MC.Engine.pdb" />
+  </files>
+</package>

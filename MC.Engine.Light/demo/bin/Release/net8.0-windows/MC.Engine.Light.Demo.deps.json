@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "MC.Engine.Light.Demo/1.0.0": {
+        "dependencies": {
+          "MC.Engine.Light": "1.0.0"
+        },
+        "runtime": {
+          "MC.Engine.Light.Demo.dll": {}
+        }
+      },
+      "MC.Engine.Light/1.0.0": {
+        "runtime": {
+          "MC.Engine.Light.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MC.Engine.Light.Demo/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MC.Engine.Light/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

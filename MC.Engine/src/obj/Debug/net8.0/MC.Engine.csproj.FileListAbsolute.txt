@@ -1,0 +1,14 @@
+E:\工具\MC-Engine\MC.Engine\src\obj\Debug\net8.0\MC.Engine.csproj.AssemblyReference.cache
+E:\工具\MC-Engine\MC.Engine\src\obj\Debug\net8.0\MC.Engine.GeneratedMSBuildEditorConfig.editorconfig
+E:\工具\MC-Engine\MC.Engine\src\obj\Debug\net8.0\MC.Engine.AssemblyInfoInputs.cache
+E:\工具\MC-Engine\MC.Engine\src\obj\Debug\net8.0\MC.Engine.AssemblyInfo.cs
+E:\工具\MC-Engine\MC.Engine\src\obj\Debug\net8.0\MC.Engine.csproj.CoreCompileInputs.cache
+E:\工具\MC-Engine\MC.Engine\src\bin\Debug\net8.0\MC.Engine.deps.json
+E:\工具\MC-Engine\MC.Engine\src\bin\Debug\net8.0\MC.Engine.dll
+E:\工具\MC-Engine\MC.Engine\src\bin\Debug\net8.0\MC.Engine.pdb
+E:\工具\MC-Engine\MC.Engine\src\bin\Debug\net8.0\MC.Engine.xml
+E:\工具\MC-Engine\MC.Engine\src\obj\Debug\net8.0\MC.Engine.dll
+E:\工具\MC-Engine\MC.Engine\src\obj\Debug\net8.0\refint\MC.Engine.dll
+E:\工具\MC-Engine\MC.Engine\src\obj\Debug\net8.0\MC.Engine.xml
+E:\工具\MC-Engine\MC.Engine\src\obj\Debug\net8.0\MC.Engine.pdb
+E:\工具\MC-Engine\MC.Engine\src\obj\Debug\net8.0\ref\MC.Engine.dll

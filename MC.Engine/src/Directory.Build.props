@@ -1,0 +1,30 @@
+<Project>
+  <PropertyGroup>
+    <Authors>nan.lin Contributors</Authors>
+    <Company>Lenton</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/looklin/LT.MC-Engine</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/looklin/LT.MC-Engine</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>motion-control;plc;automation;state-machine;middleware;di;hal</PackageTags>
+    <Copyright>Copyright © Lenton Contributors</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <LangVersion>latest</LangVersion>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)..\..\nupkgs\</PackageOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(TargetFramework) == 'net8.0' Or $(TargetFramework) == 'net9.0'">
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\docs\icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

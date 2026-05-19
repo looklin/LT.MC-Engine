@@ -1,0 +1,12 @@
+E:\工具\MC-Engine\MC.Engine.Light\src\bin\Debug\netstandard2.0\MC.Engine.Light.deps.json
+E:\工具\MC-Engine\MC.Engine.Light\src\bin\Debug\netstandard2.0\MC.Engine.Light.dll
+E:\工具\MC-Engine\MC.Engine.Light\src\bin\Debug\netstandard2.0\MC.Engine.Light.pdb
+E:\工具\MC-Engine\MC.Engine.Light\src\bin\Debug\netstandard2.0\MC.Engine.Light.xml
+E:\工具\MC-Engine\MC.Engine.Light\src\obj\Debug\netstandard2.0\MC.Engine.Light.csproj.AssemblyReference.cache
+E:\工具\MC-Engine\MC.Engine.Light\src\obj\Debug\netstandard2.0\MC.Engine.Light.GeneratedMSBuildEditorConfig.editorconfig
+E:\工具\MC-Engine\MC.Engine.Light\src\obj\Debug\netstandard2.0\MC.Engine.Light.AssemblyInfoInputs.cache
+E:\工具\MC-Engine\MC.Engine.Light\src\obj\Debug\netstandard2.0\MC.Engine.Light.AssemblyInfo.cs
+E:\工具\MC-Engine\MC.Engine.Light\src\obj\Debug\netstandard2.0\MC.Engine.Light.csproj.CoreCompileInputs.cache
+E:\工具\MC-Engine\MC.Engine.Light\src\obj\Debug\netstandard2.0\MC.Engine.Light.dll
+E:\工具\MC-Engine\MC.Engine.Light\src\obj\Debug\netstandard2.0\MC.Engine.Light.xml
+E:\工具\MC-Engine\MC.Engine.Light\src\obj\Debug\netstandard2.0\MC.Engine.Light.pdb

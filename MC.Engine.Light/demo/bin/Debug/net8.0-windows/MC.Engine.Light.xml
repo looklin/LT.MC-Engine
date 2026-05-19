@@ -1,0 +1,317 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MC.Engine.Light</name>
+    </assembly>
+    <members>
+        <member name="T:MC.Engine.Light.EngineState">
+            <summary>
+            引擎状态
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineState.Idle">
+            <summary>空闲状态，等待启动</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineState.Running">
+            <summary>正在运行</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineState.Paused">
+            <summary>已暂停</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineState.Stopping">
+            <summary>正在停止</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineState.Error">
+            <summary>错误状态，需要复位</summary>
+        </member>
+        <member name="T:MC.Engine.Light.EngineCommand">
+            <summary>
+            引擎命令
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.Start">
+            <summary>启动</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.Pause">
+            <summary>暂停</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.Resume">
+            <summary>继续</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.Stop">
+            <summary>停止</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.EmergencyStop">
+            <summary>急停</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.StopComplete">
+            <summary>停止完成</summary>
+        </member>
+        <member name="F:MC.Engine.Light.EngineCommand.Reset">
+            <summary>复位</summary>
+        </member>
+        <member name="T:MC.Engine.Light.StopMode">
+            <summary>
+            停止模式
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.StopMode.Smooth">
+            <summary>平滑停止：减速到零</summary>
+        </member>
+        <member name="F:MC.Engine.Light.StopMode.Quick">
+            <summary>快速停止：按最大减速度停止</summary>
+        </member>
+        <member name="F:MC.Engine.Light.StopMode.Emergency">
+            <summary>急停：立即切断动力</summary>
+        </member>
+        <member name="T:MC.Engine.Light.ErrorSeverity">
+            <summary>
+            错误严重级别
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.ErrorSeverity.Warning">
+            <summary>警告，可继续运行</summary>
+        </member>
+        <member name="F:MC.Engine.Light.ErrorSeverity.Recoverable">
+            <summary>可恢复错误</summary>
+        </member>
+        <member name="F:MC.Engine.Light.ErrorSeverity.Fatal">
+            <summary>致命错误，需要停止</summary>
+        </member>
+        <member name="T:MC.Engine.Light.StateChangedEventArgs">
+            <summary>
+            状态变更事件参数
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.StateChangedEventArgs.PreviousState">
+            <summary>之前的状态</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StateChangedEventArgs.NewState">
+            <summary>新的状态</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StateChangedEventArgs.Timestamp">
+            <summary>时间戳</summary>
+        </member>
+        <member name="T:MC.Engine.Light.ErrorEventArgs">
+            <summary>
+            错误事件参数
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.ErrorEventArgs.ErrorMessage">
+            <summary>错误消息</summary>
+        </member>
+        <member name="P:MC.Engine.Light.ErrorEventArgs.Severity">
+            <summary>错误严重级别</summary>
+        </member>
+        <member name="P:MC.Engine.Light.ErrorEventArgs.Timestamp">
+            <summary>时间戳</summary>
+        </member>
+        <member name="T:MC.Engine.Light.StepChangedEventArgs">
+            <summary>
+            步骤变更事件参数
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.StepChangedEventArgs.TaskName">
+            <summary>任务名称</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StepChangedEventArgs.PreviousStep">
+            <summary>之前的步骤</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StepChangedEventArgs.CurrentStep">
+            <summary>当前步骤</summary>
+        </member>
+        <member name="P:MC.Engine.Light.StepChangedEventArgs.Timestamp">
+            <summary>时间戳</summary>
+        </member>
+        <member name="T:MC.Engine.Light.MotionEngineException">
+            <summary>
+            运动引擎异常
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.MotionEngineException.StateAtError">
+            <summary>错误发生时的引擎状态</summary>
+        </member>
+        <member name="P:MC.Engine.Light.MotionEngineException.Severity">
+            <summary>错误严重级别</summary>
+        </member>
+        <member name="T:MC.Engine.Light.InvalidStateException">
+            <summary>
+            无效状态异常
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Light.ExecutionContext">
+            <summary>
+            执行上下文：使用 ManualResetEvent 作为全局闸门，控制所有任务的运行/暂停
+            参考 PLC 的 RUN/STOP 模式，设计简洁高效
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.ExecutionContext._runGate">
+            <summary>全局运行闸门：Set()=运行，Reset()=暂停</summary>
+        </member>
+        <member name="F:MC.Engine.Light.ExecutionContext._isStopping">
+            <summary>停止标志</summary>
+        </member>
+        <member name="F:MC.Engine.Light.ExecutionContext._cts">
+            <summary>取消令牌源</summary>
+        </member>
+        <member name="F:MC.Engine.Light.ExecutionContext._awaitCondition">
+            <summary>任务间通信：等待条件标志</summary>
+        </member>
+        <member name="P:MC.Engine.Light.ExecutionContext.CancellationToken">
+            <summary>
+            获取取消令牌
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.WaitIfPaused">
+            <summary>
+            暂停检查点：每个步骤执行前调用
+            如果暂停，则所有任务阻塞在此处
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.WaitUntilAsync(System.Func{System.Boolean},System.Int32)">
+            <summary>
+            等待条件满足（用于任务间同步）
+            例如：TaskA 在 step1 等待 TaskB 将条件设为 true
+            </summary>
+            <param name="condition">条件函数</param>
+            <param name="timeoutMs">超时时间（毫秒），-1 表示永不超时</param>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.RequestPause">
+            <summary>
+            请求暂停：关闭闸门
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.RequestResume">
+            <summary>
+            请求继续：打开闸门
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.RequestStop">
+            <summary>
+            请求停止：释放闸门并发送取消信号
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.SetCondition(System.Boolean)">
+            <summary>
+            设置条件标志（用于任务间通信）
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.GetCondition">
+            <summary>
+            获取条件标志
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.ExecutionContext.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Light.MotionEngine">
+            <summary>
+            轻量级运动控制引擎
+            实现类 PLC 的启动/暂停/继续/停止功能
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.MotionEngine.State">
+            <summary>
+            当前引擎状态
+            </summary>
+        </member>
+        <member name="E:MC.Engine.Light.MotionEngine.StateChanged">
+            <summary>
+            状态变更事件
+            </summary>
+        </member>
+        <member name="E:MC.Engine.Light.MotionEngine.ErrorOccurred">
+            <summary>
+            错误发生事件
+            </summary>
+        </member>
+        <member name="E:MC.Engine.Light.MotionEngine.StepChanged">
+            <summary>
+            步骤变更事件
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.StartAsync(System.Func{MC.Engine.Light.ExecutionContext,System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <summary>
+            启动引擎
+            </summary>
+            <param name="taskRunner">任务执行函数</param>
+            <param name="cancellationToken">可选的取消令牌</param>
+            <returns>异步任务</returns>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.Pause">
+            <summary>
+            暂停引擎
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.Resume">
+            <summary>
+            继续引擎
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.Stop(MC.Engine.Light.StopMode)">
+            <summary>
+            停止引擎
+            </summary>
+            <param name="mode">停止模式（预留扩展）</param>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.Reset">
+            <summary>
+            复位引擎（从错误状态恢复）
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.ReportStepChanged(System.String,System.String,System.String)">
+            <summary>
+            触发步骤变更事件（公开方法，供外部调用）
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.OnError(System.String,MC.Engine.Light.ErrorSeverity)">
+            <summary>
+            触发错误事件
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.OnStepChanged(System.String,System.String,System.String)">
+            <summary>
+            触发步骤变更事件（内部使用）
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.MotionEngine.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Light.StateMachine">
+            <summary>
+            线程安全的状态机管理器
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Light.StateMachine.CurrentState">
+            <summary>
+            当前状态
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Light.StateMachine.TransitionRules">
+            <summary>
+            状态转换规则：CurrentState + Command => NextState
+            </summary>
+        </member>
+        <member name="E:MC.Engine.Light.StateMachine.StateChanged">
+            <summary>
+            状态变更事件
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Light.StateMachine.TryTransition(MC.Engine.Light.EngineCommand)">
+            <summary>
+            尝试执行状态转换
+            </summary>
+            <param name="command">要执行的命令</param>
+            <returns>是否转换成功</returns>
+        </member>
+        <member name="M:MC.Engine.Light.StateMachine.ForceState(MC.Engine.Light.EngineState)">
+            <summary>
+            强制设置状态（用于初始化或错误恢复）
+            </summary>
+        </member>
+    </members>
+</doc>

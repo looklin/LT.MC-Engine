@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MC.Engine</name>
+    </assembly>
+    <members>
+        <member name="T:MC.Engine.Commands.MoveAbsoluteCommand">
+            <summary>
+            绝对位置移动命令
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Commands.MoveRelativeCommand">
+            <summary>
+            相对位置移动命令
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Commands.HomeCommand">
+            <summary>
+            回零命令
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Commands.DwellCommand">
+            <summary>
+            等待命令（延时）
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Commands.WaitInputCommand">
+            <summary>
+            等待输入信号命令
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Common.EngineState">
+            <summary>
+            引擎状态
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineState.Idle">
+            <summary>空闲状态，等待启动</summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineState.Running">
+            <summary>正在运行</summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineState.Paused">
+            <summary>已暂停</summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineState.Stopping">
+            <summary>正在停止</summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineState.Error">
+            <summary>错误状态，需要复位</summary>
+        </member>
+        <member name="T:MC.Engine.Common.EngineCommand">
+            <summary>
+            引擎命令
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineCommand.Start">
+            <summary>启动</summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineCommand.Pause">
+            <summary>暂停</summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineCommand.Resume">
+            <summary>继续</summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineCommand.Stop">
+            <summary>停止</summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineCommand.EmergencyStop">
+            <summary>急停</summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineCommand.StopComplete">
+            <summary>停止完成</summary>
+        </member>
+        <member name="F:MC.Engine.Common.EngineCommand.Reset">
+            <summary>复位</summary>
+        </member>
+        <member name="T:MC.Engine.Common.StopMode">
+            <summary>
+            停止模式
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Common.StopMode.Smooth">
+            <summary>平滑停止：减速到零</summary>
+        </member>
+        <member name="F:MC.Engine.Common.StopMode.Quick">
+            <summary>快速停止：按最大减速度停止</summary>
+        </member>
+        <member name="F:MC.Engine.Common.StopMode.Emergency">
+            <summary>急停：立即切断动力</summary>
+        </member>
+        <member name="T:MC.Engine.Common.ErrorSeverity">
+            <summary>
+            错误严重级别
+            </summary>
+        </member>
+        <member name="F:MC.Engine.Common.ErrorSeverity.Warning">
+            <summary>警告，可继续运行</summary>
+        </member>
+        <member name="F:MC.Engine.Common.ErrorSeverity.Recoverable">
+            <summary>可恢复错误</summary>
+        </member>
+        <member name="F:MC.Engine.Common.ErrorSeverity.Fatal">
+            <summary>致命错误，需要停止</summary>
+        </member>
+        <member name="T:MC.Engine.Common.TaskConfiguration">
+            <summary>
+            任务配置
+            </summary>
+        </member>
+        <member name="P:MC.Engine.Common.TaskConfiguration.DefaultStopMode">
+            <summary>默认停止模式</summary>
+        </member>
+        <member name="P:MC.Engine.Common.TaskConfiguration.EnableMiddleware">
+            <summary>启用中间件</summary>
+        </member>
+        <member name="P:MC.Engine.Common.TaskConfiguration.CommandTimeoutMs">
+            <summary>命令执行超时（毫秒），0 表示不超时</summary>
+        </member>
+        <member name="T:MC.Engine.Common.StateChangedEventArgs">
+            <summary>
+            状态变更事件参数
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Common.ErrorEventArgs">
+            <summary>
+            错误事件参数
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Common.CommandProgressEventArgs">
+            <summary>
+            命令进度事件参数
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Common.MotionEngineException">
+            <summary>
+            运动引擎异常
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Common.InvalidStateException">
+            <summary>
+            无效状态异常
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Core.ExecutionContext">
+            <summary>
+            执行上下文实现
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Core.IMotionEngine">
+            <summary>
+            运动控制引擎核心接口
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Core.IExecutionContext">
+            <summary>
+            执行上下文接口
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Core.MotionTask">
+            <summary>
+            运动任务
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Core.MotionCommand">
+            <summary>
+            运动命令基类
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Core.MotionCommand.PrepareAsync(MC.Engine.Core.IExecutionContext)">
+            <summary>执行前的准备动作</summary>
+        </member>
+        <member name="M:MC.Engine.Core.MotionCommand.ExecuteAsync(MC.Engine.Core.IExecutionContext)">
+            <summary>核心执行逻辑</summary>
+        </member>
+        <member name="M:MC.Engine.Core.MotionCommand.CleanupAsync(MC.Engine.Core.IExecutionContext)">
+            <summary>执行后的清理</summary>
+        </member>
+        <member name="T:MC.Engine.Core.MotionEngine">
+            <summary>
+            完整功能运动控制引擎
+            支持中间件管道、依赖注入、硬件抽象层
+            </summary>
+        </member>
+        <member name="M:MC.Engine.Core.MotionEngine.ExecuteWithMiddleware(MC.Engine.Core.MotionCommand,MC.Engine.Core.ExecutionContext)">
+            <summary>
+            通过中间件管道执行命令
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Core.StateMachine">
+            <summary>
+            线程安全的状态机管理器
+            </summary>
+        </member>
+        <member name="T:MC.Engine.HAL.Adapters.SimulatorAdapter">
+            <summary>
+            仿真器适配器：用于开发和测试，不连接真实硬件
+            </summary>
+        </member>
+        <member name="T:MC.Engine.HAL.IHalMotionCard">
+            <summary>
+            硬件抽象层：运动控制卡接口
+            </summary>
+        </member>
+        <member name="T:MC.Engine.HAL.AxisStatus">
+            <summary>
+            轴状态信息
+            </summary>
+        </member>
+        <member name="T:MC.Engine.HAL.HardwareErrorEventArgs">
+            <summary>
+            硬件错误事件参数
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Middleware.IMiddleware">
+            <summary>
+            中间件接口
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Middleware.LoggingMiddleware">
+            <summary>
+            日志中间件
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Middleware.SafetyMiddleware">
+            <summary>
+            安全检查中间件
+            </summary>
+        </member>
+        <member name="T:MC.Engine.Middleware.PerformanceMonitorMiddleware">
+            <summary>
+            性能监控中间件
+            </summary>
+        </member>
+        <member name="T:MC.Engine.ServiceCollectionExtensions">
+            <summary>
+            依赖注入扩展方法
+            </summary>
+        </member>
+        <member name="T:MC.Engine.MotionEngineOptions">
+            <summary>
+            引擎配置选项
+            </summary>
+        </member>
+        <member name="P:MC.Engine.MotionEngineOptions.DefaultStopMode">
+            <summary>默认停止模式</summary>
+        </member>
+        <member name="P:MC.Engine.MotionEngineOptions.EnableMiddleware">
+            <summary>启用中间件</summary>
+        </member>
+        <member name="P:MC.Engine.MotionEngineOptions.MiddlewareTypes">
+            <summary>中间件类型列表</summary>
+        </member>
+        <member name="P:MC.Engine.MotionEngineOptions.HalFactory">
+            <summary>硬件抽象层工厂函数</summary>
+        </member>
+    </members>
+</doc>
