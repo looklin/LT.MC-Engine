@@ -1,0 +1,40 @@
+name: Publish pre-built NuGet packages from nupkgs folder
+
+on:
+  push:
+    tags:
+      - 'v*'               # 推送 v1.0.0, v1.1.0 等标签时触发
+
+permissions:
+  contents: read
+  id-token: write          # 必须，用于 OIDC 令牌获取临时 API Key
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET (required for dotnet nuget push)
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'   # 任意可用的 SDK 版本即可
+
+      - name: List nupkgs directory (optional, for debugging)
+        run: ls -la ./nupkgs/
+
+      - name: Get temporary API key from NuGet.org
+        uses: NuGet/login@v1
+        id: login
+        with:
+          # 之前配置的 Secret，即您的 NuGet.org 用户名
+          user: ${{ secrets.NUGET_USERNAME }}
+
+      - name: Push packages to NuGet.org
+        run: |
+          dotnet nuget push "./nupkgs/*.nupkg" \
+            --api-key ${{ steps.login.outputs.NUGET_API_KEY }} \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
