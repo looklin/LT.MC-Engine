@@ -8,7 +8,7 @@
     <PackageId>LT.MC.Engine.Light</PackageId>
     <Version>1.0.0</Version>
     <Title>LT.MC.Engine.Light - Lightweight Motion Control Engine</Title>
-    <Description>轻量级运动控制流程引擎 - 类PLC启动/暂停/继续/停止功能，基于ManualResetEvent闸门机制实现</Description>
+    <Description>轻量级运动控制流程引擎 - 类PLC启动/暂停/继续/停止功能，基于ManualResetEvent闸门机制实现 | Lightweight motion control flow engine with PLC-like start/pause/resume/stop capabilities, built on ManualResetEvent gate mechanism.</Description>
     <PackageReleaseNotes>Initial release with lightweight motion control engine using ManualResetEvent gate mechanism.</PackageReleaseNotes>
   </PropertyGroup>
 
